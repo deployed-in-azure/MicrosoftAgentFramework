@@ -56,7 +56,7 @@ namespace _01_Basics
             [
                 new TextContent("What is in this picture?"),
                 // this is how you could protect sensitive data, you can replace it with any public image URL
-                new UriContent(new Uri("https://sadeployedinazuremaf.blob.core.windows.net/samples/apollo_11.png?sp=r&st=2026-05-21T14:11:45Z&se=2026-05-21T15:11:45Z&spr=https&sv=2026-02-06&sr=b&sig=KsK1YFO3%2FCkbXtSlnof%2BpYrfO1mOdwC95P3NU2%2FLxLU%3D"))
+                new UriContent(new Uri("https://sadeployedinazuremaf.blob.core.windows.net/samples/apollo_11.png?sasTokenGoesHere"))
             ]);
             Console.WriteLine(await _mafAgent.RunAsync(urlMultipartMessage));
 
