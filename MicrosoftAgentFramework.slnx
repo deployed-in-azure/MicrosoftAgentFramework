@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="01_Basics/01_Basics.csproj" />
+  <Project Path="02_ChatHistory/02_ChatHistory.csproj" Id="39ddea03-7af3-4a7e-8c97-3c716f0e34e5" />
 </Solution>
