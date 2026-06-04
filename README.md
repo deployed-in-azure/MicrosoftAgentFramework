@@ -37,3 +37,17 @@ Ensure that your identity has:
 Ensure that the container you create in Azure Cosmos DB uses such a hierarchical partition key: `/tenantId, /userId, /conversationId`
 
 [Read the blog post to find more details](https://deployedinazure.com/chat-history-in-microsoft-agent-framework/)
+
+### 3. Chat History in Microsoft Agent Framework: Service-Managed Chat History
+
+Learn Service-Managed chat history in Microsoft Agent Framework. Explore Project Conversations in Microsoft Foundry and OpenAI Responses API stateful patterns.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_CONVERSATION_CLIENT_URI`: Your Microsoft Foundry endpoint URL (used for Project Conversations example).
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for Responses API examples).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+[Read the blog post to find more details](https://deployedinazure.com/service-managed-chat-history-patterns/)
