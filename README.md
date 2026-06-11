@@ -51,3 +51,16 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/service-managed-chat-history-patterns/)
+
+### 4. RAG in Microsoft Agent Framework: The Ultimate Guide to AIContextProvider
+
+Learn how to control RAG in Microsoft Agent Framework. Master AIContextProvider and TextSearchProvider for clean, production-ready .NET pipelines.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for Responses API examples).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+[Read the blog post to find more details](https://deployedinazure.com/rag-in-microsoft-agent-framework/)
