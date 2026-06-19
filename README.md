@@ -64,3 +64,24 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/rag-in-microsoft-agent-framework/)
+
+### 5. Injecting Neo4j Graph Context into Microsoft Agent Framework: Neo4jContextProvider vs Tool Call
+
+Master Neo4jContextProvider vs tool calls in Microsoft Agent Framework to build flexible, production-ready .NET GraphRAG architectures.
+
+[Reading this blog post is helpful to understand the topics discussed here](https://deployedinazure.com/graph-rag-csharp-neo4j-introduction/)
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for the Responses API chat client).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AZURE_OPEN_AI_URI`: Your Azure OpenAI endpoint URL (used for the embedding client).
+- `AZURE_OPEN_AI_EMBEDDING_MODEL`: Your embedding model deployment name e.g. `text-embedding-ada-002`
+- `NEO4J_URI`: Your Neo4j database URI e.g. `neo4j://127.0.0.1:7687`
+- `NEO4J_USERNAME`: Your Neo4j username
+- `NEO4J_PASSWORD`: Your Neo4j password
+- `NEO4J_INDEX_NAME`: Your Neo4j vector index name (required for the `Neo4jContextProvider` example)
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+[Read the blog post to find more details](https://deployedinazure.com/neo4jcontextprovider-vs-tool-call/)

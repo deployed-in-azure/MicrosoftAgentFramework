@@ -3,4 +3,5 @@
   <Project Path="02_ChatHistory/02_ChatHistory.csproj" Id="39ddea03-7af3-4a7e-8c97-3c716f0e34e5" />
   <Project Path="03_ServiceManagedChatHistory/03_ServiceManagedChatHistory.csproj" Id="80be140c-400c-40d5-afa4-29a911d0ee45" />
   <Project Path="04_RAG_Intro/04_RAG_Intro.csproj" Id="7cab712a-269d-4a60-9398-b8dd88e09f22" />
+  <Project Path="05_RAG_Neo4j/05_RAG_Neo4j.csproj" Id="9fba5267-14cc-4bec-8e37-ba42c1848798" />
 </Solution>
