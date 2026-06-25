@@ -4,4 +4,5 @@
   <Project Path="03_ServiceManagedChatHistory/03_ServiceManagedChatHistory.csproj" Id="80be140c-400c-40d5-afa4-29a911d0ee45" />
   <Project Path="04_RAG_Intro/04_RAG_Intro.csproj" Id="7cab712a-269d-4a60-9398-b8dd88e09f22" />
   <Project Path="05_RAG_Neo4j/05_RAG_Neo4j.csproj" Id="9fba5267-14cc-4bec-8e37-ba42c1848798" />
+  <Project Path="06_RAG_FoundryIQ/06_RAG_FoundryIQ.csproj" Id="f8dc0895-ec70-4e48-bdbe-a6f9b1000e42" />
 </Solution>
