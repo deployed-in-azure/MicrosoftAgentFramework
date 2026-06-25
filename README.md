@@ -85,3 +85,19 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/neo4jcontextprovider-vs-tool-call/)
+
+### 6. Foundry IQ MCP Server vs HTTP: Enterprise RAG for MAF
+
+Connect Microsoft Agent Framework to enterprise data in minutes. Compare the Foundry IQ MCP server with raw HTTP for optimal .NET RAG apps.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL.
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AZURE_AI_SEARCH_URI`: Your Azure AI Search endpoint URL (used as the Foundry IQ endpoint).
+- `AZURE_AI_SEARCH_KNOWLEDGE_BASE`: Your Foundry IQ knowledge base name.
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+- the `Search Index Data Reader` RBAC role assigned to access the Azure AI Search
+
+[Read the blog post to find more details](https://deployedinazure.com/foundry-iq-mcp-server-vs-http-rag-maf/)
