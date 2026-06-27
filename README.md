@@ -101,3 +101,18 @@ Ensure that your identity has:
 - the `Search Index Data Reader` RBAC role assigned to access the Azure AI Search
 
 [Read the blog post to find more details](https://deployedinazure.com/foundry-iq-mcp-server-vs-http-rag-maf/)
+
+### 7. Long-Term Agent Memory in Microsoft Agent Framework with ChatHistoryMemoryProvider
+
+Design a robust memory architecture for autonomous AI agents that goes beyond simple, single session conversations.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for the Responses API chat client).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AZURE_OPEN_AI_URI`: Your Azure OpenAI endpoint URL (used for the embedding client).
+- `AZURE_OPEN_AI_EMBEDDING_MODEL`: Your embedding model deployment name e.g. `text-embedding-ada-002`
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+Blog post will be added soon.
