@@ -115,4 +115,4 @@ To run the example, set the following environment variables:
 Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
-Blog post will be added soon.
+[Read the blog post to find more details](https://deployedinazure.com/agent-memory-chathistorymemoryprovider/)
