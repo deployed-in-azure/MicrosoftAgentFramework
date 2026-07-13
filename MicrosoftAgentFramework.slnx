@@ -6,4 +6,5 @@
   <Project Path="05_RAG_Neo4j/05_RAG_Neo4j.csproj" Id="9fba5267-14cc-4bec-8e37-ba42c1848798" />
   <Project Path="06_RAG_FoundryIQ/06_RAG_FoundryIQ.csproj" Id="f8dc0895-ec70-4e48-bdbe-a6f9b1000e42" />
   <Project Path="07_Memory_Intro/07_Memory_Intro.csproj" Id="d1c23a40-daff-4ee9-8e37-e442a4d624df" />
+  <Project Path="08_Memory_Mem0/08_Memory_Mem0.csproj" Id="1d3c1147-cca4-40cd-b626-c00fe94545e6" />
 </Solution>
