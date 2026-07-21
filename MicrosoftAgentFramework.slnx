@@ -7,4 +7,5 @@
   <Project Path="06_RAG_FoundryIQ/06_RAG_FoundryIQ.csproj" Id="f8dc0895-ec70-4e48-bdbe-a6f9b1000e42" />
   <Project Path="07_Memory_Intro/07_Memory_Intro.csproj" Id="d1c23a40-daff-4ee9-8e37-e442a4d624df" />
   <Project Path="08_Memory_Mem0/08_Memory_Mem0.csproj" Id="1d3c1147-cca4-40cd-b626-c00fe94545e6" />
+  <Project Path="09_Memory_FoundryMemory/09_Memory_FoundryMemory.csproj" Id="5accb6b1-ac27-4065-8b14-6cf0597e8087" />
 </Solution>
