@@ -130,3 +130,18 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/getting-started-mem0-dot-net-agent-framework/)
+
+### 9. Mastering Microsoft Foundry Memory: Long-Term Context for AI Agents
+
+Give your AI agents long-term context with Microsoft Foundry Memory Store. Learn how to use FoundryMemoryProvider in MAF with C#.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for the Responses API chat client).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `FOUNDRY_PROJECT_NAME`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `FOUNDRY_MEMORY_STORE_NAME`: Your Foundry Memory Store name e.g. `default-memory-store`
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+[Read the blog post to find more details](https://deployedinazure.com/microsoft-foundry-memory/)
