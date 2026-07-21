@@ -108,25 +108,15 @@ namespace _09_Memory_FoundryMemory
             return;
         }
 
-        private async Task WaitUntilScopeDeletedAsync(int pollingIntervalInMilliseconds = 500)
+        private async Task WaitUntilScopeDeletedAsync()
         {
-            AnsiConsole.MarkupLine("\n[dim]Deleting scope until deleted...[/]");
+            AnsiConsole.MarkupLine("\n[dim]Deleting scope...[/]");
 
-            while (true)
-            {
-                var deleteResult = await _foundryProjectClient.MemoryStores.DeleteScopeAsync(
-                    Environment.GetEnvironmentVariable("FOUNDRY_MEMORY_STORE_NAME"),
-                    _scope);
+            var deleteResult = await _foundryProjectClient.MemoryStores.DeleteScopeAsync(
+                                Environment.GetEnvironmentVariable("FOUNDRY_MEMORY_STORE_NAME"),
+                                _scope);
 
-                AnsiConsole.MarkupLine($"  [dim]IsDeleted:[/] {deleteResult.Value.IsDeleted}");
-
-                if (deleteResult.Value.IsDeleted)
-                {
-                    break;
-                }
-
-                await Task.Delay(TimeSpan.FromMilliseconds(pollingIntervalInMilliseconds));
-            }
+            AnsiConsole.MarkupLine($"  [dim]IsDeleted:[/] {deleteResult.Value.IsDeleted}");
         }
 
         private async Task<string> UpdateAsync(IReadOnlyList<ResponseItem> items, TimeSpan updateDelay, string? previousUpdateId)
