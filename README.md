@@ -145,3 +145,22 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/microsoft-foundry-memory/)
+
+### 10. AI Memory Scopes in Microsoft Foundry: 4 Architectural Patterns for .NET
+
+Explore 4 core architectural patterns for AI memory scopes in Microsoft Foundry, Mem0, and the Microsoft Agent Framework. Learn how to isolate, share, and coordinate persistent state across users and agents in .NET.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for the Responses API chat client).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-4o-mini`
+- `FOUNDRY_PROJECT_NAME`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+
+Ensure that the following memory stores exist in your Foundry project:
+- `gym-store`: Used for gym/fitness agent memory.
+- `diet-store`: Used for dietitian agent memory.
+- `default-memory-store`: Used as the shared store across agents.
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+[Read the blog post to find more details](https://deployedinazure.com/ai-memory-scopes-microsoft-foundry-dotnet/)
