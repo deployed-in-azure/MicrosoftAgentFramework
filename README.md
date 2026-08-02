@@ -164,3 +164,16 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/ai-memory-scopes-microsoft-foundry-dotnet/)
+
+### 11. Modular Agent Skills in Microsoft Agent Framework | Progressive Disclosure Pattern
+
+Master the Progressive Disclosure pattern in Microsoft Agent Framework to build modular, portable AI skills in C#. Includes full video guide.
+
+To run the example, set the following environment variables:
+- `AZURE_OPEN_AI_RESPONSES_CLIENT_URI`: Your Azure OpenAI endpoint URL (used for the Responses API chat client).
+- `AZURE_OPEN_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+[Read the blog post to find more details](https://deployedinazure.com/modular-agent-skills-progressive-disclosure/)
