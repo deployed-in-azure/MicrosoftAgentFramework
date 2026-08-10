@@ -56,3 +56,6 @@ nunit-*.xml
 # Visual Studio working folder
 .vs/
 *launchSettings.json
+
+.env
+.agentignore
