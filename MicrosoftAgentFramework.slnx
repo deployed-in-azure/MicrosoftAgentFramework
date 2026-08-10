@@ -9,4 +9,5 @@
   <Project Path="08_Memory_Mem0/08_Memory_Mem0.csproj" Id="1d3c1147-cca4-40cd-b626-c00fe94545e6" />
   <Project Path="09_Memory_FoundryMemory/09_Memory_FoundryMemory.csproj" Id="5accb6b1-ac27-4065-8b14-6cf0597e8087" />
   <Project Path="10_Memory_MemoryScopes/10_Memory_MemoryScopes.csproj" Id="8ac67080-6bc5-47fb-892d-d4a3ceb8f4f5" />
+  <Project Path="11_Skills/11_Skills.csproj" Id="2bfe2100-0d51-4abc-a3b7-538c35c9416c" />
 </Solution>
