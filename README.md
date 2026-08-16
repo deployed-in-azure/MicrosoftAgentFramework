@@ -177,3 +177,38 @@ Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 
 [Read the blog post to find more details](https://deployedinazure.com/modular-agent-skills-progressive-disclosure/)
+
+### 12. Building & Deploying Hosted Agents in Microsoft Foundry using Microsoft Agent Framework
+
+Master enterprise hosted agent architectures to deploy secure, isolated runtimes for your agentic applications in Microsoft Foundry. I'll show you how to move from basic prompt agents to fully managed containerized workloads using C# and Microsoft Agent Framework.
+
+This example shows the code-first (`azure.ai.agent` / `remote_build`) hosting model, where `azd` builds and deploys your C# project directly as a Foundry-hosted agent exposing the Responses protocol.
+
+To run the example, set the following environment variables:
+- `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AGENT_NAME`: The name to register the hosted agent under in Microsoft Foundry.
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+Deploy the hosted agent with `azd deploy`, using the provided `azure.yaml`.
+
+[Read the blog post to find more details](https://deployedinazure.com/intro-to-hosted-agents-in-microsoft-foundry/)
+
+### 13. Building & Deploying Hosted Agents in Microsoft Foundry using Microsoft Agent Framework (Docker)
+
+Master enterprise hosted agent architectures to deploy secure, isolated runtimes for your agentic applications in Microsoft Foundry. I'll show you how to move from basic prompt agents to fully managed containerized workloads using C# and Microsoft Agent Framework.
+
+This example shows the container-first (`azure.ai.agent` / Docker) hosting model, packaging the agent in a `Dockerfile` so you have full control over the runtime image before `azd` deploys it as a Foundry-hosted agent exposing the Responses protocol.
+
+To run the example, set the following environment variables:
+- `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+Deploy the hosted agent with `azd deploy`, using the provided `azure.yaml`.
+
+[Read the blog post to find more details](https://deployedinazure.com/intro-to-hosted-agents-in-microsoft-foundry/)
