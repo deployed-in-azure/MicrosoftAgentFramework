@@ -257,6 +257,30 @@ Unlike the hosted Foundry scenario, self-hosting allows full control over HTTP h
 
 This is the recommended approach for scenarios where you need reliable OBO token flow without platform-level header stripping constraints.
 
+**Prerequisites:**
+
+To enable the OBO flow to work correctly, you need to configure your Entra ID applications as follows:
+
+- **Expose a scope in your Agent Blueprint app registration**: Define a scope (e.g., `access_as_user`) that represents permission to call the agent on behalf of users.
+- **Add API Permissions to your client app registration**: Add the exposed scope from the Agent Blueprint as an API permission to the app registration that will obtain the initial user token.
+- **Token audience requirement**: The token obtained from your client app must contain the `aud` (audience) claim that points to your `AzureAd__ClientId` (the Agent Blueprint client ID). This ensures the token is intended for your agent.
+- **Requested scope**: When acquiring the initial token in your client app, request the scope you exposed in the Agent Blueprint (e.g., `access_as_user`). This scope will then be used in the OBO token exchange to obtain a token for calling Microsoft Graph.
+
+**Obtaining the Initial Token (Example with Implicit Flow):**
+
+If you have the implicit flow enabled for your client app registration, you can obtain an access token by directing a user to the following authorization URL:
+
+```
+https://login.microsoftonline.com/<tenant_id>/oauth2/v2.0/authorize?client_id=<client_app_reg_client_id>&response_type=token&redirect_uri=https://jwt.ms&scope=api://<blueprint_client_id>/access_as_user
+```
+
+Replace:
+- `<tenant_id>`: Your Azure AD tenant ID
+- `<client_app_reg_client_id>`: The app registration ID that has permission to the Blueprint's exposed scope
+- `<blueprint_client_id>`: Your Agent Blueprint client ID (same as `AzureAd__ClientId`)
+
+The returned token will have the correct `aud` claim pointing to your Blueprint client ID and can be used to invoke the agent with the OBO flow (Authorization Header: Bearer <token>).
+
 To run the example, set the following environment variables:
 - `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
 - `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
