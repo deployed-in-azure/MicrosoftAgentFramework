@@ -36,7 +36,7 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
             var agentIdentityId = Environment.GetEnvironmentVariable("AgentIdentityId") ?? throw new InvalidOperationException("AGENT_IDENTITY_ID is not set.");
             var graphCallMethod = Environment.GetEnvironmentVariable("GraphCallMethod") ?? "GraphServiceClient";
 
-            // Globally attach the interceptor to ALL HttpClients
+            // let's intercept the OBO token exchange request and response
             builder.Services.AddTransient<MsalLoggingHandler>();
             builder.Services.ConfigureAll<HttpClientFactoryOptions>(options =>
             {
@@ -44,6 +44,36 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
                 {
                     b.AdditionalHandlers.Add(b.Services.GetRequiredService<MsalLoggingHandler>());
                 });
+            });
+
+            // Intercept the request to read the OBO token from the custom header
+            builder.Services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.Events ??= new JwtBearerEvents();
+                var originalOnMessageReceived = options.Events.OnMessageReceived;
+
+                options.Events.OnMessageReceived = async context =>
+                {
+                    foreach (var header in context.Request.Headers)
+                    {
+                        Console.WriteLine($"[HeaderTrace] {header.Key}: {string.Join(", ", header.Value)}");
+                    }
+
+                    var customAuth = context.Request.Headers["BlueprintAuthorization"].FirstOrDefault();
+                    var usedCustomHeader = !string.IsNullOrEmpty(customAuth) && customAuth.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase);
+
+                    if (usedCustomHeader)
+                    {
+                        context.Token = customAuth!.Substring("Bearer ".Length).Trim();
+                    }
+
+                    Console.WriteLine($"[Auth] BlueprintAuthorization header present: {!string.IsNullOrEmpty(customAuth)}, used as bearer token: {usedCustomHeader}, standard Authorization header present: {context.Request.Headers.ContainsKey("Authorization")}");
+
+                    if (originalOnMessageReceived != null)
+                    {
+                        await originalOnMessageReceived(context);
+                    }
+                };
             });
 
             var httpContextAccessor = new HttpContextAccessor();
@@ -71,7 +101,6 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
                     {
                         options.Scopes = [DEFAULT_GRAPH_SCOPE];
                         options.WithAgentIdentity(agentIdentityId);
-                        options.RequestAppToken = false;
                     });
 
                     graphTool = CreateHttpClientTool(httpContextAccessor, agentIdentityId, "GraphApi");
@@ -85,8 +114,7 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
                     {
                         var handlerOptions = new MicrosoftIdentityMessageHandlerOptions
                         {
-                            Scopes = [DEFAULT_GRAPH_SCOPE],
-                            RequestAppToken = false
+                            Scopes = [DEFAULT_GRAPH_SCOPE]
                         };
 
                         handlerOptions.WithAgentIdentity(agentIdentityId);
@@ -148,18 +176,16 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
 
                 // redundant call (just for the demo) which shows how to pull the token using OBO flow
                 // you can grab it and check it using jwt.ms to see the claims and scopes
-                var authHeader = await httpContext.RequestServices.GetRequiredService<IAuthorizationHeaderProvider>()
-                    // CreateAuthorizationHeaderForAppAsync
-                    .CreateAuthorizationHeaderForUserAsync(
-                        scopes: [DEFAULT_GRAPH_SCOPE],
-                        new AuthorizationHeaderProviderOptions().WithAgentIdentity(agentIdentityId));
+                //var authHeader = await httpContext.RequestServices.GetRequiredService<IAuthorizationHeaderProvider>()
+                //    .CreateAuthorizationHeaderForUserAsync(
+                //        scopes: [DEFAULT_GRAPH_SCOPE],
+                //        new AuthorizationHeaderProviderOptions().WithAgentIdentity(agentIdentityId));
 
                 var me = await httpContext.RequestServices.GetRequiredService<GraphServiceClient>()
                     .Me
                     .GetAsync(r => r.Options.WithAuthenticationOptions(options =>
                     {
                         options.WithAgentIdentity(agentIdentityId);
-                        options.RequestAppToken = false;
                     }));
 
                 return new
@@ -181,20 +207,15 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
                 var httpContext = httpContextAccessor.HttpContext ?? throw new InvalidOperationException("No active HTTP context is available to perform the On-Behalf-Of exchange.");
 
                 var me = await httpContext.RequestServices.GetRequiredService<IDownstreamApi>()
-                    .GetForUserAsync<Microsoft.Graph.Models.User>(
-                        serviceName: "GraphApi", // The name of the API from your configuration dictionary > DownstreamApis__GraphApi__BaseUrl
-                        options =>
-                        {
-                            options.RelativePath = "me";
-                            options.WithAgentIdentity(agentIdentityId);
-                            options.RequestAppToken = false;
-                        });
+                        .GetForUserAsync<Microsoft.Graph.Models.User>(
+                            serviceName: "GraphApi",
+                            options =>
+                            {
+                                options.RelativePath = "me";
+                                options.WithAgentIdentity(agentIdentityId);
+                            });
 
-                return new
-                {
-                    me?.DisplayName,
-                    me?.UserPrincipalName,
-                };
+                return new { me?.DisplayName, me?.UserPrincipalName };
             },
             name: "GetMyGraphProfile",
             description: "Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent's identity.");
@@ -241,8 +262,26 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
                 Console.WriteLine(formattedParams);
                 Console.WriteLine("==================================\n");
             }
+            else
+            {
+                Console.WriteLine($"[HttpTrace] {request.Method} {request.RequestUri}");
+            }
 
-            var response = await base.SendAsync(request, cancellationToken);
+            HttpResponseMessage response;
+            try
+            {
+                response = await base.SendAsync(request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[HttpTrace] Request to {request.RequestUri} threw: {ex}");
+                throw;
+            }
+
+            if (!isTokenEndpoint)
+            {
+                Console.WriteLine($"[HttpTrace] {request.Method} {request.RequestUri} -> {(int)response.StatusCode}");
+            }
 
             if (isTokenEndpoint && response.IsSuccessStatusCode && response.Content != null)
             {
@@ -254,6 +293,15 @@ namespace _14_HostedAgent_AgentId_OnBehalfOfFlow
                 Console.WriteLine("BEARER TOKEN:");
                 Console.WriteLine(bearerToken);
                 Console.WriteLine("====================================\n");
+            }
+            else if (isTokenEndpoint && !response.IsSuccessStatusCode && response.Content != null)
+            {
+                var errorBody = await response.Content.ReadAsStringAsync(cancellationToken);
+                Console.WriteLine("\n=== OBO TOKEN EXCHANGE FAILED ===");
+                Console.WriteLine($"URL: {request.RequestUri}");
+                Console.WriteLine($"STATUS: {(int)response.StatusCode}");
+                Console.WriteLine($"BODY: {errorBody}");
+                Console.WriteLine("==================================\n");
             }
 
             return response;

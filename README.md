@@ -212,3 +212,63 @@ Ensure that your identity has:
 Deploy the hosted agent with `azd deploy`, using the provided `azure.yaml`.
 
 [Read the blog post to find more details](https://deployedinazure.com/intro-to-hosted-agents-in-microsoft-foundry/)
+
+### 14. HostedAgent with Agent Identity and On-Behalf-Of Flow (Unsuccessful Attempt)
+
+This example demonstrates an **unsuccessful attempt** to implement the On-Behalf-Of (OBO) flow using Microsoft.Identity.Web (in-process) authentication model with Hosted Agents in Microsoft Foundry.
+
+The implementation tried to leverage Microsoft.Identity.Web's token acquisition capabilities to perform OBO token exchange for calling Microsoft Graph on behalf of the authenticated user. 
+However, this approach encountered a critical limitation: **Microsoft Foundry removes all custom HTTP headers** passed through the platform, including the custom `BlueprintAuthorization` header that was being used to transmit the bearer token which audience denotes the agent blueprint client id.
+
+The challenge required passing 2 headers:
+1. **Blueprint Authorization header**: For passing the user's token to the agent with "aud=BlueprintClientId" (removed by Foundry)
+2. **Standard Authorization header**: For authenticating with the Foundry data-plane gateway at `ai.azure.com`
+
+Since Foundry strips custom headers at the gateway level, the OBO flow could not be properly implemented in this hosted environment. This example serves as a cautionary tale and reference point for understanding Foundry's header handling behavior.
+
+**Note**: See Project 15 for a working self-hosted implementation of the OBO flow.
+
+To run this example (it works locally), set the following environment variables:
+- `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AzureAd__Instance`: Your Azure AD instance e.g. `https://login.microsoftonline.com/`
+- `AzureAd__TenantId`: Your Azure AD tenant ID
+- `AzureAd__ClientId`: Your Agent Blueprint client ID
+- `AzureAd__ClientCredentials__0__SourceType`: The credential source type for the agent identity (it could be client secret when working locally)
+- `AzureAd__ClientCredentials__0__ClientSecret`: Your application's client secret (only needed when working locally)
+- `DownstreamApis__GraphApi__BaseUrl`: Microsoft Graph API base URL (`https://graph.microsoft.com/v1.0/`)
+- `DownstreamApis__GraphApi__Scopes__0`: Scopes for Graph API access (`https://graph.microsoft.com/.default`)
+- `AgentIdentityId`: The Agent Identity ID for your agent (child of the Blueprint client ID)
+- `GraphCallMethod`: The method to call Graph API (e.g., `GraphServiceClient`, `DownstreamApi`, `HttpClient`, `ManualHttpClient`)
+- `AZURE_TOKEN_CREDENTIALS`: "dev" (needed just when running locally)
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+### 15. Agent On Behalf Of Flow in Entra Agent ID with Microsoft.Identity.Web & Microsoft Agent Framework
+
+This example demonstrates a **working implementation** of the On-Behalf-Of (OBO) flow using Microsoft.Identity.Web (in-process) authentication model with self-hosted agents via the Microsoft Agent Framework.
+
+Unlike the hosted Foundry scenario, self-hosting allows full control over HTTP headers and authentication flows. This implementation successfully performs OBO token exchange to call Microsoft Graph on behalf of the authenticated user, demonstrating clean patterns for:
+- Acquiring user tokens from the incoming request context
+- Performing OBO token exchange using Microsoft.Identity.Web
+- Calling downstream APIs (Microsoft Graph) with the exchanged token
+- Multiple token acquisition patterns: `GraphServiceClient`, `DownstreamApi`, `HttpClient`, and manual HTTP client approaches
+
+This is the recommended approach for scenarios where you need reliable OBO token flow without platform-level header stripping constraints.
+
+To run the example, set the following environment variables:
+- `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AzureAd__Instance`: Your Azure AD instance e.g. `https://login.microsoftonline.com/`
+- `AzureAd__TenantId`: Your Azure AD tenant ID
+- `AzureAd__ClientId`: Your Agent Blueprint client ID
+- `AzureAd__ClientCredentials__0__SourceType`: The credential source type for the agent identity (e.g. ClientSecret when running locally or SignedAssertionFromManagedIdentity when hosted in Azure)
+- `DownstreamApis__GraphApi__BaseUrl`: Microsoft Graph API base URL (`https://graph.microsoft.com/v1.0/`)
+- `DownstreamApis__GraphApi__Scopes__0`: Scopes for Graph API access (`https://graph.microsoft.com/.default`)
+- `AgentIdentityId`: The Agent Identity ID for your agent (child of the Blueprint client ID)
+- `GraphCallMethod`: The method to call Graph API (e.g., `GraphServiceClient`, `DownstreamApi`, `HttpClient`, `ManualHttpClient`)
+- `AZURE_TOKEN_CREDENTIALS`: "dev" (needed just when running locally)
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource

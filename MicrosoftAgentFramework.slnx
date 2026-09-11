@@ -13,4 +13,5 @@
   <Project Path="12_Hosting_Intro/12_Hosting_Intro.csproj" Id="ff56eb84-ea46-4ce9-9ed8-98864495cc73" />
   <Project Path="13_Hosting_Intro_Docker/13_Hosting_Intro_Docker.csproj" Id="073d7f41-130b-4d37-88cb-26e45645d665" />
   <Project Path="14_HostedAgent_AgentId_OnBehalfOfFlow/14_HostedAgent_AgentId_OnBehalfOfFlow.csproj" Id="a2b91bb7-d332-41da-8788-589e242cdf1d" />
+  <Project Path="15_SelfHostedAgent_AgentId_OnBehalfOfFlow/15_SelfHostedAgent_AgentId_OnBehalfOfFlow.csproj" Id="3a23709f-dfbe-415e-883d-6ed3752e135d" />
 </Solution>
