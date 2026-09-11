@@ -264,6 +264,7 @@ To run the example, set the following environment variables:
 - `AzureAd__TenantId`: Your Azure AD tenant ID
 - `AzureAd__ClientId`: Your Agent Blueprint client ID
 - `AzureAd__ClientCredentials__0__SourceType`: The credential source type for the agent identity (e.g. ClientSecret when running locally or SignedAssertionFromManagedIdentity when hosted in Azure)
+- `AzureAd__ClientCredentials__0__ClientSecret`: Your application's client secret (only needed when working locally)
 - `DownstreamApis__GraphApi__BaseUrl`: Microsoft Graph API base URL (`https://graph.microsoft.com/v1.0/`)
 - `DownstreamApis__GraphApi__Scopes__0`: Scopes for Graph API access (`https://graph.microsoft.com/.default`)
 - `AgentIdentityId`: The Agent Identity ID for your agent (child of the Blueprint client ID)
