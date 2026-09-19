@@ -118,7 +118,7 @@ namespace _16_HostedAgent_AgentId_AgentUser
         }
 
         /// <summary>
-        /// Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange,
+        /// Gets the Agent User Account's Microsoft Graph profile via an On-Behalf-Of token exchange,
         /// using the strongly-typed <see cref="GraphServiceClient"/>.
         /// </summary>
         private static AIFunction CreateGraphServiceClientTool(IHttpContextAccessor httpContextAccessor, string agentIdentityId, Guid agentUserObjectId) =>
@@ -141,10 +141,10 @@ namespace _16_HostedAgent_AgentId_AgentUser
                 };
             },
             name: "GetMyGraphProfile",
-            description: "Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent's identity.");
+            description: "Gets the Agent User Account's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent user identity.");
 
         /// <summary>
-        /// Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange,
+        /// Gets the Agent User Account's Microsoft Graph profile via an On-Behalf-Of token exchange,
         /// using the generic <see cref="IDownstreamApi"/> abstraction.
         /// </summary>
         private static AIFunction CreateDownstreamApiTool(IHttpContextAccessor httpContextAccessor, string agentIdentityId, Guid agentUserObjectId) =>
@@ -164,10 +164,10 @@ namespace _16_HostedAgent_AgentId_AgentUser
                 return new { me?.DisplayName, me?.UserPrincipalName };
             },
             name: "GetMyGraphProfile",
-            description: "Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent's identity.");
+            description: "Gets the Agent User Account's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent user identity.");
 
         /// <summary>
-        /// Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange,
+        /// Gets the Agent User Account's Microsoft Graph profile via an On-Behalf-Of token exchange,
         /// using a named <see cref="HttpClient"/> configured with <see cref="MicrosoftIdentityMessageHandler"/>.
         /// </summary>
         private static AIFunction CreateHttpClientTool(
@@ -186,7 +186,7 @@ namespace _16_HostedAgent_AgentId_AgentUser
                 };
             },
             name: "GetMyGraphProfile",
-            description: "Gets the signed-in user's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent's identity.");
+            description: "Gets the Agent User Account's Microsoft Graph profile via an On-Behalf-Of token exchange using the agent user identity.");
     }
 
     public class MsalLoggingHandler : DelegatingHandler
