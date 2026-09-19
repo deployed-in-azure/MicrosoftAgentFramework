@@ -297,3 +297,44 @@ To run the example, set the following environment variables:
 
 Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+
+### 16. The New Agent User Account in Microsoft Entra Agent ID | Graph API, OBO Exchange & Foundry
+
+This example shows how to run a hosted Microsoft Agent Framework app in Microsoft Foundry with a dedicated Agent User identity in Microsoft Entra Agent ID. The agent can call Microsoft Graph using the agent user's identity through four approaches: `GraphServiceClient`, `DownstreamApi`, `HttpClient`, or a manual `HttpClient` message handler. It also logs the token exchange so you can inspect the request and response during the OBO flow.
+
+To create a new Agent User account, invoke the Microsoft Graph API with:
+
+```http
+POST https://graph.microsoft.com/v1.0/users/microsoft.graph.agentUser
+```
+
+```json
+{
+  "accountEnabled": true,
+  "displayName": "Agent User",
+  "mailNickname": "agentuser",
+  "userPrincipalName": "agentuser@<your_entra_domain>",
+  "identityParentId": "<agent_identity_id>"
+}
+```
+
+To run the example, set the following environment variables:
+- `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5.4-mini`
+- `AzureAd__Instance`: Your Azure AD instance e.g. `https://login.microsoftonline.com/`
+- `AzureAd__TenantId`: Your Azure AD tenant ID
+- `AzureAd__ClientId`: Your Agent Blueprint client ID
+- `AzureAd__ClientCredentials__0__SourceType`: The credential source type for the agent identity (e.g. ClientSecret when running locally or another when hosted in Azure)
+- `AzureAd__ClientCredentials__0__ClientSecret`: Your application's client secret (only needed when working locally)
+- `DownstreamApis__GraphApi__BaseUrl`: Microsoft Graph API base URL (`https://graph.microsoft.com/v1.0/`)
+- `DownstreamApis__GraphApi__Scopes__0`: Scopes for Graph API access (`https://graph.microsoft.com/.default`)
+- `AgentIdentityId`: The Agent Identity ID for your agent (child of the Blueprint client ID)
+- `AgentUserObjectId`: The object ID of the Agent User account to impersonate when calling Graph
+- `GraphCallMethod`: The method to call Graph API (e.g., `GraphServiceClient`, `DownstreamApi`, `HttpClient`, `ManualHttpClient`)
+- `AZURE_TOKEN_CREDENTIALS`: "dev" (needed just when running locally)
+
+To run it locally, you can invoke `azd ai agent run`, but first complete the `azd ai agent init` flow.
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+- the `AgentIdUser.ReadWrite.IdentityParentedBy` least-privilege permission to create Agent User identities in Microsoft Entra Agent ID

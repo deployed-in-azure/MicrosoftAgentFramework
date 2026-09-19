@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: 16-hostedagent-agentid-agentuser
+services:
+    16-hostedagent-agentid-agentuser:
+        project: .
+        host: azure.ai.agent
+        language: csharp
+        uses:
+            - azure-foundry-002
+        codeConfiguration:
+            dependencyResolution: remote_build
+            entryPoint: 16_HostedAgent_AgentId_AgentUser.dll
+            runtime: dotnet_10
+        container:
+            resources:
+                cpu: "0.5"
+                memory: 1Gi
+        environmentVariables:
+            - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
+              value: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
+            - name: AzureAd__Instance
+              value: ${AzureAd__Instance}
+            - name: AzureAd__TenantId
+              value: ${AzureAd__TenantId}
+            - name: AzureAd__ClientId
+              value: ${AzureAd__ClientId}
+            - name: AzureAd__ClientCredentials__0__SourceType
+              value: ${AzureAd__ClientCredentials__SourceType}
+            - name: AzureAd__ClientCredentials__0__KeyVaultUrl
+              value: ${AzureAd__ClientCredentials__KeyVaultUrl}
+            - name: AzureAd__ClientCredentials__0__KeyVaultCertificateName
+              value: ${AzureAd__ClientCredentials__KeyVaultCertificateName}
+            - name: DownstreamApis__GraphApi__BaseUrl
+              value: ${DownstreamApis__GraphApi__BaseUrl}
+            - name: DownstreamApis__GraphApi__Scopes__0
+              value: ${DownstreamApis__GraphApi__Scope}
+            - name: AgentIdentityId
+              value: ${AgentIdentityId}
+            - name: AgentUserObjectId
+              value: ${AgentUserObjectId}
+            - name: GraphCallMethod
+              value: ${GraphCallMethod}
+        kind: hosted
+        name: 16-hostedagent-agentid-agentuser
+        protocols:
+            - protocol: responses
+              version: 2.0.0
+    azure-foundry-002:
+        host: azure.ai.project
+        endpoint: https://azure-foundry-002-resource.services.ai.azure.com/api/projects/azure-foundry-002
+infra:
+    provider: microsoft.foundry
