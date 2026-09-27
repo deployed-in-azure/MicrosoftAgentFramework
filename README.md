@@ -338,3 +338,16 @@ To run it locally, you can invoke `azd ai agent run`, but first complete the `az
 Ensure that your identity has:
 - the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
 - the `AgentIdUser.ReadWrite.IdentityParentedBy` least-privilege permission to create Agent User identities in Microsoft Entra Agent ID
+
+### 17. Microsoft Foundry Toolbox Deep Dive | Tool Search, Auth & Guardrails
+
+Master the Toolbox in Microsoft Foundry to connect a hosted agent to one or more toolboxes, keep tool access tightly scoped, and guide the agent to search for missing tools before it gives up. This example uses `AIProjectClient.AsAIAgent` with `AddFoundryResponses` and `AddFoundryToolboxes` to expose toolbox-backed tools through a hosted Responses endpoint.
+
+To run the example, set the following environment variables:
+- `FOUNDRY_PROJECT_ENDPOINT`: Your Microsoft Foundry project endpoint URL e.g. `https://<resource>.services.ai.azure.com/api/projects/<project-name>`
+- `AZURE_AI_MODEL_DEPLOYMENT_NAME`: Your LLM deployment name e.g. `gpt-5-mini-1`
+- `TOOLBOX_NAME`: The toolbox name to register with the agent
+
+Ensure that your identity has:
+- the `Foundry User` RBAC role assigned to access the Microsoft Foundry resource
+

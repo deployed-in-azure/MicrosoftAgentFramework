@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: 17-hostedagent-foundrytoolbox
+services:
+    17-hostedagent-foundrytoolbox:
+        project: .
+        host: azure.ai.agent
+        language: csharp
+        uses:
+            - azure-foundry-002
+        codeConfiguration:
+            dependencyResolution: remote_build
+            entryPoint: 17_HostedAgent_FoundryToolbox.dll
+            runtime: dotnet_10
+        container:
+            resources:
+                cpu: "0.5"
+                memory: 1Gi
+        environmentVariables:
+            - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
+              value: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
+            - name: TOOLBOX_NAME
+              value: ${TOOLBOX_NAME}
+        kind: hosted
+        name: 17-hostedagent-foundrytoolbox
+        protocols:
+            - protocol: responses
+              version: 2.0.0
+    azure-foundry-002:
+        host: azure.ai.project
+        endpoint: https://azure-foundry-002-resource.services.ai.azure.com/api/projects/azure-foundry-002
+infra:
+    provider: microsoft.foundry
