@@ -15,4 +15,5 @@
   <Project Path="14_HostedAgent_AgentId_OnBehalfOfFlow/14_HostedAgent_AgentId_OnBehalfOfFlow.csproj" Id="a2b91bb7-d332-41da-8788-589e242cdf1d" />
   <Project Path="15_SelfHostedAgent_AgentId_OnBehalfOfFlow/15_SelfHostedAgent_AgentId_OnBehalfOfFlow.csproj" Id="3a23709f-dfbe-415e-883d-6ed3752e135d" />
   <Project Path="16_HostedAgent_AgentId_AgentUser/16_HostedAgent_AgentId_AgentUser.csproj" Id="d1551b2b-6e88-47bc-8386-378d71629cc7" />
+  <Project Path="17_HostedAgent_FoundryToolbox/17_HostedAgent_FoundryToolbox.csproj" Id="69b798f7-f7bf-4efc-8045-9d60e0b0ff34" />
 </Solution>
